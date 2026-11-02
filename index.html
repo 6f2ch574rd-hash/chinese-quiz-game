@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>國文期中考・註釋複習遊戲｜《促織》＋〈登高〉</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23a63a2b'/%3E%3Ctext x='32' y='44' font-size='34' text-anchor='middle' fill='%23f5efe2' font-family='serif'%3E章%3C/text%3E%3C/svg%3E"/>
+<style>
+:root{
+  --paper:#f5efe2; --paper2:#efe6d2; --ink:#2b2622; --ink2:#5a5147; --ink3:#8a7f72;
+  --cinnabar:#a63a2b; --cinnabar2:#7d2a1f; --jade:#3f5d54; --jade2:#2e463f;
+  --gold:#b08d3f; --line:#d8cbb2; --ok:#3f7d54; --bad:#a63a2b; --white:#fffdf7;
+}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+html,body{margin:0; padding:0;}
+body{
+  font-family:"PingFang TC","Hiragino Sans TC","Heiti TC","Microsoft JhengHei",sans-serif;
+  background:
+    radial-gradient(1200px 600px at 85% -10%, rgba(176,141,63,.10), transparent 60%),
+    radial-gradient(900px 500px at -10% 20%, rgba(63,93,84,.08), transparent 55%),
+    var(--paper);
+  color:var(--ink); line-height:1.7; min-height:100vh;
+}
+.serif{font-family:"Songti TC","Noto Serif TC","Hiragino Mincho ProN",serif;}
+.wrap{max-width:760px; margin:0 auto; padding:18px 16px 60px;}
+/* ===== hero ===== */
+.hero{text-align:center; padding:34px 6px 20px; position:relative;}
+.seal{
+  width:64px; height:64px; margin:0 auto 14px; border-radius:10px;
+  background:var(--cinnabar); color:var(--paper);
+  display:flex; align-items:center; justify-content:center;
+  font-family:"Songti TC",serif; font-size:36px; font-weight:700;
+  box-shadow:0 4px 14px rgba(166,58,43,.35);
+  animation:sealIn .7s cubic-bezier(.2,1.4,.4,1) both;
+}
+@keyframes sealIn{0%{transform:scale(2.4) rotate(-14deg); opacity:0;} 55%{transform:scale(.92) rotate(2deg); opacity:1;} 100%{transform:scale(1) rotate(0);}}
+.hero h1{
+  font-family:"Songti TC","Noto Serif TC",serif; font-size:27px; margin:0; letter-spacing:2px;
+  animation:fadeUp .6s .15s both;
+}
+.hero .sub{color:var(--ink2); font-size:15px; margin:8px 0 0; letter-spacing:1px; animation:fadeUp .6s .28s both;}
+.hero .scope{
+  display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-top:14px; animation:fadeUp .6s .4s both;
+}
+@keyframes fadeUp{from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:none;}}
+.pill{
+  border:1px solid var(--line); background:var(--white); color:var(--ink2);
+  font-size:12px; padding:3px 10px; border-radius:999px; letter-spacing:.5px;
+}
+.pill b{color:var(--cinnabar);}
+/* ===== mode cards ===== */
+.modes{display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin:22px 0 8px;}
+.mode{
+  background:var(--white); border:1px solid var(--line); border-radius:14px;
+  padding:16px 14px 13px; text-align:left; cursor:pointer; position:relative;
+  transition:transform .15s, box-shadow .15s, border-color .15s;
+  min-height:118px;
+}
+.mode:active{transform:scale(.97);}
+.mode:hover{border-color:var(--cinnabar); box-shadow:0 6px 18px rgba(90,81,71,.12);}
+.mode .ic{
+  width:34px; height:34px; border-radius:9px; display:flex; align-items:center; justify-content:center;
+  font-size:17px; color:var(--white); margin-bottom:9px;
+}
+.mode .nm{font-size:15px; font-weight:700; letter-spacing:.5px;}
+.mode .ds{font-size:12px; color:var(--ink2); margin-top:3px; line-height:1.55;}
+.mode .ct{position:absolute; top:12px; right:12px; font-size:11px; color:var(--ink3);}
+.m1 .ic{background:var(--cinnabar);} .m2 .ic{background:var(--jade);}
+.m3 .ic{background:var(--gold);} .m4 .ic{background:var(--ink2);}
+/* ===== filters ===== */
+.filters{display:flex; gap:6px; flex-wrap:wrap; margin:10px 0 14px; align-items:center;}
+.filters .lbl{font-size:12px; color:var(--ink3); margin-right:2px;}
+.chip{
+  border:1px solid var(--line); background:var(--white); color:var(--ink2);
+  font-size:12.5px; padding:5px 12px; border-radius:999px; cursor:pointer; transition:all .15s;
+}
+.chip.on{background:var(--ink); color:var(--paper); border-color:var(--ink);}
+/* ===== quiz ===== */
+.card{
+  background:var(--white); border:1px solid var(--line); border-radius:16px;
+  padding:20px 18px; box-shadow:0 3px 12px rgba(90,81,71,.07);
+}
+.progress{display:flex; align-items:center; gap:10px; margin-bottom:14px;}
+.pbar{flex:1; height:7px; background:var(--paper2); border-radius:99px; overflow:hidden;}
+.pfill{height:100%; width:0%; background:var(--cinnabar); border-radius:99px; transition:width .3s;}
+.pnum{font-size:12.5px; color:var(--ink3); white-space:nowrap;}
+.qtag{display:inline-block; font-size:11px; padding:2px 8px; border-radius:99px; background:var(--paper2); color:var(--ink2); margin-bottom:8px;}
+.qtext{font-size:18px; font-weight:700; line-height:1.6; margin:0 0 4px;}
+.qtext .big{font-size:30px; display:block; text-align:center; margin:6px 0 2px; letter-spacing:6px;}
+.qhint{font-size:13px; color:var(--ink3); margin-bottom:12px;}
+.opts{display:flex; flex-direction:column; gap:8px;}
+.opt{
+  border:1.5px solid var(--line); background:var(--white); border-radius:11px;
+  padding:11px 13px; font-size:15px; cursor:pointer; text-align:left; transition:all .12s; line-height:1.6;
+  display:flex; gap:9px; align-items:baseline;
+}
+.opt .k{flex:none; font-family:"Songti TC",serif; color:var(--ink3); font-size:13px; font-weight:700;}
+.opt:hover{border-color:var(--ink2);}
+.opt.correct{border-color:var(--ok); background:#eef6ef;}
+.opt.correct .k{color:var(--ok);}
+.opt.wrong{border-color:var(--bad); background:#fbece9;}
+.opt.wrong .k{color:var(--bad);}
+.opt.dim{opacity:.5;}
+.explain{
+  margin-top:12px; border-left:4px solid var(--gold); background:#fbf6ea;
+  padding:10px 12px; border-radius:0 10px 10px 0; font-size:13.5px; color:var(--ink2);
+  display:none;
+}
+.explain.show{display:block; animation:fadeUp .25s both;}
+.explain b{color:var(--cinnabar);}
+.next{margin-top:14px; width:100%; padding:13px; border:none; border-radius:11px; background:var(--cinnabar); color:var(--white); font-size:16px; font-weight:700; cursor:pointer; letter-spacing:2px;}
+.next:disabled{background:var(--line); color:var(--ink3); cursor:default;}
+/* ===== result ===== */
+.result{text-align:center; padding:14px 4px;}
+.result .score{font-family:"Songti TC",serif; font-size:56px; color:var(--cinnabar); line-height:1.1;}
+.result .score small{font-size:18px; color:var(--ink3);}
+.result .verdict{font-size:15px; color:var(--ink2); margin:8px 0 16px;}
+.stars{display:flex; gap:8px; justify-content:center; margin:12px 0;}
+.star{
+  width:46px; height:46px; border-radius:50%; border:1.5px solid var(--line); background:var(--white);
+  font-size:21px; color:var(--line); display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all .12s;
+}
+.star.on{border-color:var(--gold); color:var(--gold); background:#fbf3de;}
+.hist{margin-top:16px; text-align:left; font-size:12.5px; color:var(--ink3); background:var(--paper2); border-radius:11px; padding:10px 12px; line-height:1.8;}
+.btns{display:flex; gap:10px; margin-top:16px;}
+.btns button{flex:1; padding:12px; border-radius:11px; border:1.5px solid var(--line); background:var(--white); font-size:15px; cursor:pointer; font-weight:600;}
+.btns .pri{border-color:var(--cinnabar); background:var(--cinnabar); color:var(--white);}
+/* ===== cards mode ===== */
+.flipzone{perspective:1200px; margin-top:6px;}
+.flip{
+  position:relative; width:100%; min-height:250px; cursor:pointer; transform-style:preserve-3d;
+  transition:transform .45s cubic-bezier(.3,.8,.3,1);
+}
+.flip.flipped{transform:rotateY(180deg);}
+.flip .face{
+  position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden;
+  background:var(--white); border:1px solid var(--line); border-radius:16px;
+  padding:24px 18px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
+}
+.flip .face.front .qtag{position:absolute; top:14px; left:14px;}
+.flip .face .cardword{font-family:"Songti TC",serif; font-size:26px; font-weight:700; line-height:1.5;}
+.flip .face .cardctx{font-size:13.5px; color:var(--ink2); margin-top:10px; max-width:560px;}
+.flip .face.back{transform:rotateY(180deg); background:#fdfaf1;}
+.flip .face.back .def{font-size:16px; line-height:1.8;}
+.flip .face.back .mark{font-size:12px; color:var(--cinnabar); margin-top:12px;}
+.flip .tap{position:absolute; bottom:12px; font-size:11.5px; color:var(--ink3);}
+.cardacts{display:flex; gap:10px; margin-top:14px;}
+.cardacts button{flex:1; padding:12px; border-radius:11px; border:1.5px solid var(--line); background:var(--white); font-size:14.5px; cursor:pointer; font-weight:600;}
+.cardacts .know{background:var(--jade); border-color:var(--jade); color:var(--white);}
+.cardacts .dont{background:var(--cinnabar); border-color:var(--cinnabar); color:var(--white);}
+.cardstat{margin-top:12px; font-size:12.5px; color:var(--ink3); text-align:center;}
+/* ===== overview ===== */
+.ov{display:flex; flex-direction:column; gap:8px; margin-top:8px;}
+.ovitem{border:1px solid var(--line); border-radius:12px; background:var(--white); overflow:hidden;}
+.ovitem summary{padding:11px 13px; cursor:pointer; font-size:14px; display:flex; gap:8px; align-items:baseline; list-style:none;}
+.ovitem summary::-webkit-details-marker{display:none;}
+.ovitem summary .qk{color:var(--cinnabar); font-family:"Songti TC",serif; font-weight:700;}
+.ovitem summary .atag{font-size:11px; color:var(--ink3); margin-left:auto; flex:none;}
+.ovbody{padding:2px 13px 12px; font-size:13.5px; color:var(--ink2); border-top:1px dashed var(--line);}
+.ovbody .oa{margin:6px 0 2px;}
+.ovbody .oa b.ok{color:var(--ok);}
+.ovbody .oa b.bad{color:var(--bad);}
+.ovbody .oe{margin-top:6px; padding:7px 9px; background:var(--paper2); border-radius:8px; font-size:12.5px;}
+/* ===== nav ===== */
+.topbar{display:flex; align-items:center; gap:10px; margin-bottom:12px;}
+.back{
+  border:1px solid var(--line); background:var(--white); border-radius:10px; padding:7px 13px;
+  font-size:13.5px; cursor:pointer; color:var(--ink2);
+}
+.topbar .t{font-family:"Songti TC",serif; font-size:18px; font-weight:700; letter-spacing:1px;}
+.foot{margin-top:26px; text-align:center; font-size:11.5px; color:var(--ink3); line-height:1.8;}
+.foot b{color:var(--cinnabar);}
+.hidden{display:none !important;}
+@media (min-width:640px){
+  .modes{grid-template-columns:repeat(4,1fr);}
+  .mode{min-height:150px;}
+  .hero h1{font-size:33px;}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ===== 首頁 ===== -->
+  <section id="view-home">
+    <div class="hero">
+      <div class="seal">章</div>
+      <h1>國文期中考・註釋複習</h1>
+      <div class="sub serif">《聊齋誌異・促織》＋ 杜甫〈登高〉</div>
+      <div class="scope">
+        <span class="pill">範圍：<b>《促織》＋〈登高〉</b></span>
+        <span class="pill">標記：★必考　✗不考</span>
+        <span class="pill">注音：台灣注音符號</span>
+      </div>
+    </div>
+    <div class="modes">
+      <div class="mode m1" onclick="go('quiz')">
+        <div class="ic">考</div>
+        <div class="nm">選擇題闖關</div>
+        <div class="ds">字詞釋義・人物主旨・寫作技巧，逐題附詳解</div>
+        <div class="ct" id="best-quiz"></div>
+      </div>
+      <div class="mode m2" onclick="go('bpmf')">
+        <div class="ic">音</div>
+        <div class="nm">注音挑戰</div>
+        <div class="ds">ㄅㄆㄇ台灣注音符號，字↔音雙向測驗</div>
+        <div class="ct" id="best-bpmf"></div>
+      </div>
+      <div class="mode m3" onclick="go('cards')">
+        <div class="ic">卡</div>
+        <div class="nm">註釋翻字卡</div>
+        <div class="ds">點卡翻面看註釋，會／不會分類複習</div>
+        <div class="ct" id="best-cards"></div>
+      </div>
+      <div class="mode m4" onclick="go('overview')">
+        <div class="ic">覽</div>
+        <div class="nm">詳解總覽</div>
+        <div class="ds">全部題目一次看，考前最後衝刺</div>
+        <div class="ct" id="best-overview"></div>
+      </div>
+    </div>
+    <div class="filters">
+      <span class="lbl">範圍：</span>
+      <button class="chip on" data-f="all" onclick="setFilter('all',this)">全部</button>
+      <button class="chip" data-f="必考" onclick="setFilter('必考',this)">★老師必考</button>
+      <button class="chip" data-f="前半" onclick="setFilter('前半',this)">促織・前半(9/21)</button>
+      <button class="chip" data-f="後半" onclick="setFilter('後半',this)">促織・後半(10/5)</button>
+      <button class="chip" data-f="登高" onclick="setFilter('登高',this)">登高</button>
+      <button class="chip" data-f="注音" onclick="setFilter('注音',this)">注音</button>
+    </div>
+    <div class="card" style="font-size:13.5px; color:var(--ink2);">
+      資料來源：9/21、10/5 課堂錄音筆記（01、03）＋〈登高〉外部整理（06）。★＝老師明說必考；✗＝不考。〈登高〉為通行課本註釋，非老師授課內容。
+    </div>
+  </section>
+
+  <!-- ===== 測驗（選擇／注音共用） ===== -->
+  <section id="view-quiz" class="hidden">
+    <div class="topbar"><button class="back" onclick="go('home')">‹ 回首頁</button><div class="t" id="quiz-title">選擇題闖關</div></div>
+    <div class="card">
+      <div class="progress"><div class="pbar"><div class="pfill" id="pfill"></div></div><div class="pnum" id="pnum"></div></div>
+      <span class="qtag" id="qtag"></span>
+      <p class="qtext" id="qtext"></p>
+      <div class="qhint" id="qhint"></div>
+      <div class="opts" id="opts"></div>
+      <div class="explain" id="explain"></div>
+      <button class="next" id="nextbtn" onclick="nextQ()">下一題</button>
+    </div>
+  </section>
+
+  <!-- ===== 結果頁 ===== -->
+  <section id="view-result" class="hidden">
+    <div class="topbar"><div class="t" id="result-title">測驗結果</div></div>
+    <div class="card result">
+      <div class="score"><span id="score-num">0</span><small> / <span id="score-total">0</span></small></div>
+      <div class="verdict" id="verdict"></div>
+      <div class="stars" id="stars"></div>
+      <div class="hist" id="hist"></div>
+      <div class="btns">
+        <button onclick="go('home')">回首頁</button>
+        <button class="pri" onclick="restart()">再來一輪</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 翻字卡 ===== -->
+  <section id="view-cards" class="hidden">
+    <div class="topbar"><button class="back" onclick="go('home')">‹ 回首頁</button><div class="t">註釋翻字卡</div></div>
+    <div class="filters">
+      <span class="lbl">範圍：</span>
+      <button class="chip on" data-f="all" onclick="cardFilter('all',this)">全部</button>
+      <button class="chip" data-f="前半" onclick="cardFilter('前半',this)">前半</button>
+      <button class="chip" data-f="後半" onclick="cardFilter('後半',this)">後半</button>
+      <button class="chip" data-f="登高" onclick="cardFilter('登高',this)">登高</button>
+    </div>
+    <div class="card">
+      <div class="flipzone"><div class="flip" id="flip" onclick="flipCard()">
+        <div class="face front">
+          <span class="qtag" id="cf-tag"></span>
+          <div class="cardword" id="cf-word"></div>
+          <div class="cardctx" id="cf-ctx"></div>
+          <div class="tap">點擊翻面</div>
+        </div>
+        <div class="face back">
+          <div class="def" id="cf-def"></div>
+          <div class="mark" id="cf-mark"></div>
+          <div class="tap">點擊翻回</div>
+        </div>
+      </div></div>
+      <div class="cardacts">
+        <button class="dont" onclick="cardMark(false)">還不會</button>
+        <button class="know" onclick="cardMark(true)">會了</button>
+      </div>
+      <div class="cardstat" id="cf-stat"></div>
+    </div>
+  </section>
+
+  <!-- ===== 詳解總覽 ===== -->
+  <section id="view-overview" class="hidden">
+    <div class="topbar"><button class="back" onclick="go('home')">‹ 回首頁</button><div class="t">詳解總覽</div></div>
+    <div class="filters">
+      <span class="lbl">範圍：</span>
+      <button class="chip on" data-f="all" onclick="ovFilter('all',this)">全部</button>
+      <button class="chip" data-f="必考" onclick="ovFilter('必考',this)">★老師必考</button>
+      <button class="chip" data-f="前半" onclick="ovFilter('前半',this)">前半</button>
+      <button class="chip" data-f="後半" onclick="ovFilter('後半',this)">後半</button>
+      <button class="chip" data-f="登高" onclick="ovFilter('登高',this)">登高</button>
+      <button class="chip" data-f="注音" onclick="ovFilter('注音',this)">注音</button>
+    </div>
+    <div class="ov" id="ovlist"></div>
+  </section>
+
+  <div class="foot">
+    資料：<b>[录音 9/21]</b>・<b>[录音 10/5]</b>・<b>[外部补充]</b>（〈登高〉）　｜　★＝老師明說必考，✗＝不考<br/>
+    依課本「有打勾才考」原則；〈登高〉若老師已上課，以課堂版本為準。成績存於本機瀏覽器。
+  </div>
+</div>
+
+<script>
+'use strict';
+/* ================= 題庫 ================= */
+var QUIZ = [];   // 選擇題＋注音題（含注音題，tag=注音）
+var CARDS = [];  // 翻字卡
+/* ---- 《促織》前半（9/21） ---- */
+QUIZ.push({q:"「促織」是什麼？",opts:["蟋蟀的別名","蚱蜢","蝗蟲","螻蛄"],ans:0,exp:"促織＝蟋蟀的別名（注二）。宮中「尚」促織之戲＝崇尚、喜好鬥蟋蟀。",tag:"前半",zone:"9/21"});
+QUIZ.push({q:"「市中遊俠兒得佳者籠養之」的「遊俠兒」指？",opts:["路見不平的俠客","遊手好閒的混混、奸商","江湖賣藝之人","負責收稅的差役"],ans:1,exp:"遊俠兒＝遊手好閒的混混、奸商，不是俠客。他們「昂其直，居為奇貨」＝抬高價錢、囤積居奇。★★必考",tag:"前半",zone:"9/21"});
+QUIZ.push({q:"「昂其直，居為奇貨」的「直」意思是？",opts:["一直","正直","價值（直＝值）","位置"],ans:2,exp:"直＝值、價錢；昂其直＝抬高價錢；居＝囤積。",tag:"前半",zone:"9/21"});
+QUIZ.push({q:"「里胥猾黠，假此科斂丁口」的「里胥」指？",opts:["里長","官署小吏、貪官","獵戶","書生"],ans:1,exp:"里胥＝官署小吏（貪官，注十）；假＝藉。★注十必考",tag:"前半",zone:"9/21"});
+QUIZ.push({q:"「假此科斂丁口」的「假」意思是？",opts:["放假","虛假","藉（憑藉）","假如"],ans:2,exp:"假＝藉、憑藉。借這個名目向百姓攤派斂財。",tag:"前半",zone:"9/21"});
+QUIZ.push({q:"「科斂丁口」中「丁」指的是？",opts:["成年男子","未成年者","女性","老人"],ans:0,exp:"丁＝成年男子；口＝未成年者與女性。合起來就是「人口」，按人頭攤派。",tag:"前半",zone:"9/21"});
+QUIZ.push({q:"「科斂丁口」中「口」指的是？",opts:["嘴巴","人口","未成年者與女性","戶籍"],ans:2,exp:"口＝未成年者與女性；與「丁」（成年男子）合稱人口。",tag:"前半",zone:"9/21"});
+QUIZ.push({q:"「操童子業，久不售」的「售」意思是？",opts:["賣出","考中、被錄取","購買","展售"],ans:1,exp:"售＝考中、被錄取（注九）。「久不售」＝一直考不上。★★注八、九「一定會考」",tag:"前半",zone:"9/21"});
+QUIZ.push({q:"「操童子業」的「童子」指？",opts:["小孩","準備童子試的考生","書僮","童養媳"],ans:1,exp:"童子＝準備童子試的考生（注八）。成名是童生、考不上，所以迂訥。",tag:"前半",zone:"9/21"});
+QUIZ.push({q:"「又劣弱不中於款」的「中」意思是？",opts:["中間","射中","符合","其中"],ans:2,exp:"中＝符合；不中於款＝不合規格。★「不中於款」老師說一定考",tag:"前半",zone:"9/21"});
+QUIZ.push({q:"「不中於款」的「款」意思是？",opts:["款項","規格、標準","款式","招待"],ans:1,exp:"款＝規格、標準。捕到的蟋蟀太劣弱，不合官府規格。",tag:"前半",zone:"9/21"});
+QUIZ.push({q:"「宰嚴限追比」的「宰」指？",opts:["宰相","縣令","太守","獄卒"],ans:1,exp:"宰＝縣令。追比＝限期逼責，到期未完成就杖責。★宰＝縣令",tag:"前半",zone:"9/21"});
+QUIZ.push({q:"「死何裨益？不如自行搜覓」的「裨」意思是？",opts:["保佑","幫助、益處","卑下","犧牲"],ans:1,exp:"裨＝幫助、益處。妻說「死有什麼幫助？」→行動派。",tag:"前半",zone:"9/21"});
+QUIZ.push({q:"「靡計不施」的「靡」意思是？",opts:["浪費","無（沒有）","倒下","奢靡"],ans:1,exp:"靡＝無。無計不施＝什麼辦法都用上了（雙重否定表強調）。",tag:"前半",zone:"9/21"});
+QUIZ.push({q:"「迄無濟」的「迄」意思是？",opts:["至今","最終","待到","迄止"],ans:1,exp:"迄＝最終；迄無濟＝終究沒有成功。",tag:"前半",zone:"9/21"});
+QUIZ.push({q:"「唇吻翕辟」的「翕」意思是？",opts:["合攏","張開","顫動","念咒"],ans:0,exp:"翕＝合；辟＝開。「唇吻翕辟」＝嘴一開一合（巫師念咒）。★★翕辟必考",tag:"前半",zone:"9/21"});
+QUIZ.push({q:"「唇吻翕辟」的「辟」意思是？",opts:["避開","打開","偏僻","刑辟"],ans:1,exp:"辟＝開。翕＝合、辟＝開，一開一合。",tag:"前半",zone:"9/21"});
+QUIZ.push({q:"「無毫髮爽」的「爽」意思是？",opts:["涼爽","爽快","差錯","損失"],ans:2,exp:"爽＝差錯。連頭髮絲細的差錯都沒有＝神準。★★「爽＝差錯」A/B卷考",tag:"前半",zone:"9/21"});
+QUIZ.push({q:"「審視，巨身修尾」的「審」意思是？",opts:["審問","仔細","審美","準備"],ans:1,exp:"審＝仔細；審視＝仔細看。",tag:"前半",zone:"9/21"});
+QUIZ.push({q:"「審視，巨身修尾」的「修」意思是？",opts:["修理","長","美好","修身"],ans:1,exp:"修＝長；巨身修尾＝身大尾長（好蟲！）。",tag:"前半",zone:"9/21"});
+QUIZ.push({q:"「問者爇香于鼎」的「爇」讀音與詞義是？",opts:["ㄖㄨㄛˋ，焚、點","ㄖㄜˋ，加熱","ㄖㄨㄛˊ，折斷","ㄋㄧㄝˋ，捏"],ans:0,exp:"爇（ㄖㄨㄛˋ）＝焚、點。爇香＝點香。鼎＝香爐。",tag:"前半",zone:"9/21"});
+QUIZ.push({q:"「掭以尖草」的「掭」意思是？",opts:["舔","用細長物輕輕撥動","填補","點綴"],ans:1,exp:"掭（ㄊㄧㄢˋ）＝用細長物輕撥。用尖草撥弄蟋蟀引牠出來。",tag:"前半",zone:"9/21"});
+QUIZ.push({q:"「躡跡披求」的「披」意思是？",opts:["披衣","撥開（撥草）","分散","覆蓋"],ans:1,exp:"披＝撥開；躡跡＝循著蹤跡輕聲追隨；披求＝撥開草尋找。",tag:"前半",zone:"9/21"});
+QUIZ.push({q:"「成妻具資詣問」的「詣」意思是？",opts:["拜託","前往（帶敬意）","指示","記憶"],ans:1,exp:"詣＝前往（帶敬意）。成妻備好錢財前往詢問巫師。",tag:"前半",zone:"9/21"});
+QUIZ.push({q:"「雖連城拱璧不啻也」的「啻」意思是？",opts:["但是","止、僅","只有","超過"],ans:1,exp:"啻（ㄔˋ）＝止、僅；不啻＝不亞於。連和氏璧都比不上這隻蟲。",tag:"前半",zone:"9/21"});
+QUIZ.push({q:"「留待限期，以塞官責」的「塞」意思是？",opts:["堵塞","應付、搪塞","邊塞","充滿"],ans:1,exp:"塞＝應付、搪塞。留到限期拿來應付官府差事。",tag:"前半",zone:"9/21"});
+QUIZ.push({q:"「遽撲之，入石穴中」的「遽」意思是？",opts:["迅速、急忙","害怕","於是","竟然"],ans:0,exp:"遽＝急忙。急忙去撲，蟲卻鑽進石穴。",tag:"前半",zone:"9/21"});
+QUIZ.push({q:"「杖至百，兩股間膿血流離」的「股」指？",opts:["臀部","大腿","屁股","小腿"],ans:1,exp:"股＝大腿（不是屁股！）。被打到大腿間膿血直流。",tag:"前半",zone:"9/21"});
+QUIZ.push({q:"「冀有萬一之得」的「冀」意思是？",opts:["希望","希望之鳥","寄託","謹慎"],ans:0,exp:"冀＝希望。希望有萬一的收穫。",tag:"前半",zone:"9/21"});
+QUIZ.push({q:"「見紅女白婆，填塞門戶」的「戶」指？",opts:["窗戶","單扇門","戶籍","帳戶"],ans:1,exp:"戶＝單扇門；門＝雙扇門。填塞門戶＝擠滿門口。",tag:"前半",zone:"9/21"});
+QUIZ.push({q:"「各各竦立以聽」的「竦」意思是？",opts:["高聳","恭敬（肅敬）","驚悚","竦身"],ans:1,exp:"竦立＝恭敬肅立。大家都恭敬站著聽。",tag:"前半",zone:"9/21"});
+QUIZ.push({q:"「不終歲，薄產累盡」的「累」意思是？",opts:["勞累","牽連、逐漸耗盡","累積","累贅"],ans:1,exp:"累＝牽連、逐漸耗盡。不到一年家產賠光。",tag:"前半",zone:"9/21"});
+QUIZ.push({q:"「成然之」的「然」是？",opts:["然而","認為……對（意動用法）","燃燒","突然"],ans:1,exp:"然之＝認為妻子的話對。然＝意動用法「認為……對」。",tag:"前半",zone:"9/21"});
+QUIZ.push({q:"「紅女白婆」的「紅女」指？",opts:["穿紅衣的女子","年輕女子","侍女","媒婆"],ans:1,exp:"紅女＝年輕女子；白婆＝白髮婆婆。紅＝形容年輕。",tag:"前半",zone:"9/21"});
+/* ---- 《促織》後半（10/5） ---- */
+QUIZ.push({q:"「竊發盆」的「竊」意思是？",opts:["竊取","偷偷（暗中）","謙虛","竊聽"],ans:1,exp:"竊＝偷偷。兒子偷看父親不在，偷偷打開盆子。★竊發",tag:"後半",zone:"10/5"});
+QUIZ.push({q:"「竊發盆」的「發」意思是？",opts:["發現","打開","發射","出發"],ans:1,exp:"發＝打開。打開養蟋蟀的盆子→蟲跳出來→悲劇。",tag:"後半",zone:"10/5"});
+QUIZ.push({q:"「蟲躍擲徑出……斯須就斃」的「斯須」意思是？",opts:["片刻、一會兒","須臾之間","立刻","很久"],ans:0,exp:"斯須＝片刻、一會兒（時間副詞，注26）。蟲一下子就被拍死了。★注26必考",tag:"後半",zone:"10/5"});
+QUIZ.push({q:"「而翁歸，自與汝覆算耳」的「覆算」意思是？",opts:["重複計算","算帳、追究","覆蓋帳目","盤點"],ans:1,exp:"覆算＝算帳、追究（約注28）。「你爸回來會跟你算帳！」★★必考，A/B卷互換",tag:"後半",zone:"10/5"});
+QUIZ.push({q:"「而翁歸」的「而」意思是？",opts:["而且","你（你的）","於是","竟然"],ans:1,exp:"而＝你；翁＝爸爸。而翁＝你爸。",tag:"後半",zone:"10/5"});
+QUIZ.push({q:"「兒涕而去」的「涕」意思是？",opts:["鼻涕","流眼淚","哭泣","鼻涕與淚"],ans:1,exp:"涕＝流眼淚（古文不是鼻涕！）。★「涕＝流眼淚」",tag:"後半",zone:"10/5"});
+QUIZ.push({q:"「如被冰雪」的「被」意思是？",opts:["棉被","覆蓋","被動","破舊"],ans:1,exp:"被＝覆蓋。像被冰雪覆蓋一身（嚇到發冷）。★「被＝覆蓋」",tag:"後半",zone:"10/5"});
+QUIZ.push({q:"「夫妻向隅」的「向隅」意思是？",opts:["面對角落（獨自悲傷）","面向東方","朝向陽光","搬去角落"],ans:0,exp:"向隅＝對著牆角（打勾）。夫妻絕望、相對無言。",tag:"後半",zone:"10/5"});
+QUIZ.push({q:"「不復聊賴」的「聊賴」意思是？",opts:["聊天","依靠","藉口","糧食"],ans:1,exp:"聊賴＝依靠；不復聊賴＝生活不再有依靠（約注32）。★★必考",tag:"後半",zone:"10/5"});
+QUIZ.push({q:"「取兒藁葬」的「藁葬」意思是？",opts:["厚葬","用草席裹屍埋葬","火葬","水葬"],ans:1,exp:"藁葬＝草席裹屍埋葬（貧窮草率下葬）。★注音＋詞義會考",tag:"後半",zone:"10/5"});
+QUIZ.push({q:"「近撫之，氣息惙然」的「惙」意思是？",opts:["停止","氣若游絲、微弱","憂愁","急促"],ans:1,exp:"惙（ㄔㄨㄛˋ）然＝氣若游絲、微弱。★注音＋詞義會考",tag:"後半",zone:"10/5"});
+QUIZ.push({q:"「自昏達曙，目不交睫」意思是？",opts:["整夜沒闔眼","眼睛沒眨","睡不著但閉眼","眼睛流淚"],ans:0,exp:"目不交睫＝上下睫毛沒相合＝整夜沒闔眼。★★考古題",tag:"後半",zone:"10/5"});
+QUIZ.push({q:"「東曦既駕」的「曦」指？",opts:["夕陽","日光（太陽已升起）","朝霞","曙光之神"],ans:1,exp:"曦＝日光；東曦既駕＝太陽已從東方升起。注35打勾。★★",tag:"後半",zone:"10/5"});
+QUIZ.push({q:"「東曦既駕」典故中的太陽神是？",opts:["后羿","羲和","夸父","望舒"],ans:1,exp:"羲和＝太陽神，駕六龍車載太陽運行。注35打勾。★★",tag:"後半",zone:"10/5"});
+QUIZ.push({q:"「驚起覘視」的「覘」意思是？",opts:["窺視、偷看","瞪視","環顧","俯視"],ans:0,exp:"覘（ㄔㄢ）＝窺視、偷看。聽到門外蟲鳴，驚起偷看。",tag:"後半",zone:"10/5"});
+QUIZ.push({q:"「審諦之，短小，黑赤色」的「審諦」意思是？",opts:["審判","仔細看","諦聽","認真想"],ans:1,exp:"審諦＝仔細看。看到小蟲又黑又赤、不是之前那隻。",tag:"後半",zone:"10/5"});
+QUIZ.push({q:"「形若土狗」的「土狗」指？",opts:["土狗（狗）","螻蛄","蟋蟀","蚯蚓"],ans:1,exp:"土狗＝螻蛄。✗注37老師沒考，但要認識。",tag:"後半",zone:"10/5"});
+QUIZ.push({q:"「小蟲伏不動，蠢若木雞」的「蠢若木雞」出自？",opts:["《莊子》","《老子》","《論語》","《孟子》"],ans:0,exp:"蠢若木雞＝呆若木雞，成語出自《莊子》（斗雞之喻）。★★出處必記",tag:"後半",zone:"10/5"});
+QUIZ.push({q:"「掩口葫蘆而笑」的「葫蘆」意思是？",opts:["葫蘆瓢","掩口而笑、咯咯笑","葫蘆形狀","大笑"],ans:1,exp:"葫蘆＝掩口而笑、咯咯笑的樣子（注38）。少年笑成蟲太小。★★注38會考",tag:"後半",zone:"10/5"});
+QUIZ.push({q:"「張尾伸須，直齕敵領」的「齕」意思是？",opts:["咬","吐","彈","揮"],ans:0,exp:"齕（ㄏㄜˊ）＝咬。一口咬住對方脖子。★★★注39必考",tag:"後半",zone:"10/5"});
+QUIZ.push({q:"「蟲翹然矜鳴」的「翹然」意思是？",opts:["翹起尾巴","抬起頭得意的樣子","飛翔貌","警戒貌"],ans:1,exp:"翹然＝抬起頭得意的樣子；矜鳴＝得意地叫（似報主知＝擬人化）。★★注40打勾",tag:"後半",zone:"10/5"});
+QUIZ.push({q:"「獻諸撫軍」的「諸」是？",opts:["許多","之於（合音）","諸侯","語氣詞"],ans:1,exp:"諸＝之於（合音「之于」）。★諸＝之於；✗撫軍未打勾不考",tag:"後半",zone:"10/5"});
+QUIZ.push({q:"「細疏其能」的「疏」意思是？",opts:["疏遠","上奏章敘述（動詞）","粗疏","疏通"],ans:1,exp:"疏＝上奏章敘述（動詞，不是「細數」）。★疏（動詞用法）",tag:"後半",zone:"10/5"});
+QUIZ.push({q:"「遍試之，無出其右者」的「右」指？",opts:["右邊","尊位（右為尊）","右手","反方向"],ans:1,exp:"無出其右＝沒有比牠強的。右為尊、左為卑＝第一名。★",tag:"後半",zone:"10/5"});
+QUIZ.push({q:"「每聞琴瑟之聲，則應節而舞」的「應節」意思是？",opts:["應該節制","隨著節拍","回應召喚","打節拍"],ans:1,exp:"應節＝隨著節拍。蟲聞樂聲隨節拍起舞。★應節而舞",tag:"後半",zone:"10/5"});
+QUIZ.push({q:"「囑學使，俾入邑庠」的「學使」指？",opts:["學校老師","掌理各省科舉學政、文風之官","縣令","學堂校長"],ans:1,exp:"學使＝掌理各省科舉學政、文風之官（像教育局局長，注45）。★★一定考",tag:"後半",zone:"10/5"});
+QUIZ.push({q:"「俾入邑庠」的「俾」意思是？",opts:["使","卑下","比喻","必須"],ans:0,exp:"俾＝使。讓成名進入地方學校（邑庠）。",tag:"後半",zone:"10/5"});
+QUIZ.push({q:"「天子一跬步」的「跬步」意思是？",opts:["半步（只踏出一隻腳）","快步","跛行","小步跑"],ans:0,exp:"跬步＝半步（只踏出一隻腳，注47）。★考讀音＋詞義",tag:"後半",zone:"10/5"});
+QUIZ.push({q:"「民日貼婦賣兒」的「貼」意思是？",opts:["貼補","典當","黏貼","貼近"],ans:1,exp:"貼＝典當。互文：民、婦合看＝百姓每天典當東西、甚至賣小孩。★★貼＋互文",tag:"後半",zone:"10/5"});
+QUIZ.push({q:"「一出門，裘馬過世家焉」的「裘馬」指？",opts:["駿馬","皮衣與馬車","裘皮大衣","豪門"],ans:1,exp:"裘馬＝皮衣與馬車（富貴行頭）；過世家＝超過名門望族。★",tag:"後半",zone:"10/5"});
+QUIZ.push({q:"「異史氏」指的是？",opts:["寫異史的人","蒲松齡自稱","司馬遷","說書人"],ans:1,exp:"異史氏＝蒲松齡自稱（相對於正史）；模仿《史記》「太史公曰」；此寫法最早出自《左傳》。★★★確定出一題",tag:"後半",zone:"10/5"});
+QUIZ.push({q:"「一人飛升，仙及雞犬」的典故主角是？",opts:["漢武帝","西漢淮南王劉安","秦始皇","唐玄宗"],ans:1,exp:"原型＝西漢淮南王劉安得道升天，雞犬舔食殘藥也成仙。注48是否考＝不確定。",tag:"後半",zone:"10/5"});
+QUIZ.push({q:"「牛羊蹄躈各千計」的「蹄躈」指？",opts:["牛羊的腳","計算牛羊馬的單位","馬蹄聲","計數工具"],ans:1,exp:"蹄躈＝計算牛羊馬的單位（按蹄、躈數折算）。要懂。",tag:"後半",zone:"10/5"});
+QUIZ.push({q:"「撫軍亦厚賚成」的「賚」意思是？",opts:["賞賜","責備","賄賂","贈禮"],ans:0,exp:"賚（ㄌㄞˋ）＝賞賜。✗老師沒勾、不考。",tag:"後半",zone:"10/5"});
+QUIZ.push({q:"成名的人物形象是？（老師兩度強調）",opts:["機智勇敢","迂訥老實、耳根子軟、遇事驚恐","貪婪狡猾","果斷行動派"],ans:1,exp:"成名＝迂訥老實的童生；耳根子軟無原則（「不如拚搏一笑」）；遇事只會大叫跺腳（「頓足失色」）。★★人物形象",tag:"後半",zone:"10/5"});
+QUIZ.push({q:"《促織》中成妻的人物形象是？",opts:["軟弱哭泣","行動派（勸夫自尋、問卜）","貪心","迷信"],ans:1,exp:"妻子＝行動派：夫想死時勸他自尋、備資問卜。對比成名的消極。",tag:"後半",zone:"10/5"});
+QUIZ.push({q:"寫作技巧「無鋪陳突入」的例子是？",opts:["「一雞瞥來」","「神氣癡木」","「應節而舞」","「唇吻翕辟」"],ans:0,exp:"「一雞瞥來」＝沒有鋪陳、突然殺出（傳統小說短篇技法）。★",tag:"後半",zone:"10/5"});
+QUIZ.push({q:"寫作技巧「伏筆」的例子是？",opts:["「神氣癡木，奄奄思睡」→魂化促織","「無出其右」","「翹然矜鳴」","「蟹白栗黃」"],ans:0,exp:"伏筆：兒「神氣癡木，奄奄思睡」→後文魂化促織（靈魂出竅）。",tag:"後半",zone:"10/5"});
+QUIZ.push({q:"「天子一跬步，皆關民命，不可忽也」主要在提醒誰？",opts:["百姓","掌權者（天子）謹慎","縣令","商人"],ans:1,exp:"主旨：不是罵天子，是提醒掌權者謹慎——天子偶用一物，奉行者即為定例，蝴蝶效應苦百姓。",tag:"後半",zone:"10/5"});
+/* @@BANK_1_END@@ */
+/* ---- 〈登高〉（外部整理） ---- */
+QUIZ.push({q:"〈登高〉的作者是？",opts:["李白","杜甫","白居易","王維"],ans:1,exp:"杜甫（712–770），字子美，世稱杜工部、詩聖、詩史，與李白並稱「李杜」。",tag:"登高",zone:"外部"});
+QUIZ.push({q:"〈登高〉創作於何時？",opts:["開元盛世","大曆二年（767）秋","安史之亂前","貞觀年間"],ans:1,exp:"唐代宗大曆二年（767）秋，杜甫 56 歲，流寓夔州（今重慶奉節）。",tag:"登高",zone:"外部"});
+QUIZ.push({q:"〈登高〉創作地點是？",opts:["長安","夔州（今重慶奉節）","成都","洛陽"],ans:1,exp:"夔州（今重慶奉節），重陽節登高之作，別名《九日登高》。",tag:"登高",zone:"外部"});
+QUIZ.push({q:"〈登高〉的體裁是？",opts:["五言律詩","七言律詩（八句皆對）","七言絕句","樂府詩"],ans:1,exp:"七言律詩，八句全對（首聯句中自對）；前四寫景、後四抒情。",tag:"登高",zone:"外部"});
+QUIZ.push({q:"「渚清沙白鳥飛迴」的「渚」指？",opts:["岸邊","水中小洲","沙灘","瀑布"],ans:1,exp:"渚（ㄓㄨˇ）＝水中小洲。不是岸邊。",tag:"登高",zone:"外部"});
+QUIZ.push({q:"「百年多病獨登臺」的「百年」指？",opts:["一百年","晚年（借指一生之末）","長壽","百年之後"],ans:1,exp:"百年＝猶言一生，此借指晚年（不是一百年！）。",tag:"登高",zone:"外部"});
+QUIZ.push({q:"「艱難苦恨繁霜鬢」的「苦恨」意思是？",opts:["痛苦與仇恨","極恨、極其遺憾","苦苦遺恨","苦難"],ans:1,exp:"苦恨＝極恨、極其遺憾；苦＝極、甚。非「痛苦之恨」。",tag:"登高",zone:"外部"});
+QUIZ.push({q:"「艱難苦恨繁霜鬢」的「繁」是？",opts:["繁多（形容詞）","增多（動詞）","繁殖","繁複"],ans:1,exp:"繁＝增多（動詞）：鬢邊白髮日益增多如霜。易誤解為形容詞。",tag:"登高",zone:"外部"});
+QUIZ.push({q:"「潦倒新停濁酒杯」為何「新停」？",opts:["沒錢買酒","晚年因肺病戒酒","酒太濁","重陽不飲酒"],ans:1,exp:"杜甫晚年因肺病戒酒；重陽登高本應飲酒，故云「新停」＝連借酒澆愁也不可得。",tag:"登高",zone:"外部"});
+QUIZ.push({q:"「無邊落木蕭蕭下」的「落木」指？",opts:["砍倒的木頭","秋天飄落的樹葉","落下的木屑","枯枝"],ans:1,exp:"落木＝秋天飄落的樹葉。文言以「木」代「葉」，更顯蕭瑟。",tag:"登高",zone:"外部"});
+QUIZ.push({q:"頸聯「十四字之間含有八意」出自？",opts:["胡應麟《詩藪》","羅大經《鶴林玉露》","楊倫《杜詩鏡銓》","沈德潛《唐詩別裁》"],ans:1,exp:"宋・羅大經《鶴林玉露》：頸聯（萬里悲秋常作客，百年多病獨登臺）十四字含八意、對偶極精確。",tag:"登高",zone:"外部"});
+QUIZ.push({q:"推〈登高〉為「古今七律第一」的是？",opts:["杜甫自己","明・胡應麟《詩藪》","宋・羅大經","清・沈德潛"],ans:1,exp:"明・胡應麟《詩藪》：「此詩自當為古今七律第一」。清・楊倫《杜詩鏡銓》稱「杜集七言律詩第一」。",tag:"登高",zone:"外部"});
+QUIZ.push({q:"〈登高〉前四句與後四句的關係是？",opts:["前四寫景、後四抒情","前四抒情、後四寫景","全篇寫景","全篇抒情"],ans:0,exp:"前四寫景：首聯近景（風、天、渚、沙）＋頷聯遠景（落木、長江）；後四抒情（萬里悲秋、百年多病）。",tag:"登高",zone:"外部"});
+QUIZ.push({q:"〈登高〉的別名是？",opts:["《九日登高》","《登高望遠》","《夔州作》","《重九》"],ans:0,exp:"別名《九日登高》——重陽節（九月九日）登高。",tag:"登高",zone:"外部"});
+QUIZ.push({q:"杜甫被稱為什麼？",opts:["詩仙","詩聖（詩史）","詩鬼","詩佛"],ans:1,exp:"杜甫＝詩聖，其詩被稱「詩史」。李白＝詩仙。",tag:"登高",zone:"外部"});
+/* ---- 注音題（台灣注音符號，字→音） ---- */
+QUIZ.push({q:"「渚」的正確注音？",opts:["ㄓㄨˇ","ㄓㄨˊ","ㄓㄨˋ","ㄓㄨ"],ans:0,exp:"渚＝ㄓㄨˇ（水中小洲）。〈登高〉「渚清沙白鳥飛迴」。",tag:"注音",tag2:"登高",zone:"外部",hint:"渚清沙白鳥飛迴"});
+QUIZ.push({q:"「鬢」的正確注音？",opts:["ㄅㄧㄣˋ","ㄅㄧㄣ","ㄅㄧㄥˋ","ㄅㄧㄥ"],ans:0,exp:"鬢＝ㄅㄧㄣˋ（鬢角、鬢髮）。「繁霜鬢」。",tag:"注音",tag2:"登高",zone:"外部",hint:"艱難苦恨繁霜鬢"});
+QUIZ.push({q:"「潦」的正確注音？",opts:["ㄌㄠˊ","ㄌㄠˇ","ㄌㄠˋ","ㄌㄧㄠˊ"],ans:0,exp:"潦＝ㄌㄠˊ（潦倒＝衰頹失意）。「潦倒新停濁酒杯」。",tag:"注音",tag2:"登高",zone:"外部",hint:"潦倒新停濁酒杯"});
+QUIZ.push({q:"「濁」的正確注音？",opts:["ㄓㄨㄛˊ","ㄓㄨㄛˋ","ㄓㄨˊ","ㄓㄨㄛ"],ans:0,exp:"濁＝ㄓㄨㄛˊ（濁酒＝未濾之酒）。「新停濁酒杯」。",tag:"注音",tag2:"登高",zone:"外部",hint:"潦倒新停濁酒杯"});
+QUIZ.push({q:"「爇」（爇香于鼎）的正確注音？",opts:["ㄖㄨㄛˋ","ㄖㄜˋ","ㄖㄨㄛˊ","ㄋㄧㄝˋ"],ans:0,exp:"爇＝ㄖㄨㄛˋ，焚、點。爇香＝點香。",tag:"注音",tag2:"促織",zone:"9/21",hint:"問者爇香于鼎"});
+QUIZ.push({q:"「掭」（掭以尖草）的正確注音？",opts:["ㄊㄧㄢˋ","ㄊㄧㄢˇ","ㄊㄧㄢ","ㄊㄧㄣˋ"],ans:0,exp:"掭＝ㄊㄧㄢˋ，用細長物輕輕撥動。",tag:"注音",tag2:"促織",zone:"9/21",hint:"掭以尖草"});
+QUIZ.push({q:"「啻」（不啻）的正確注音？",opts:["ㄔˋ","ㄓˇ","ㄕˋ","ㄘˋ"],ans:0,exp:"啻＝ㄔˋ，止、僅；不啻＝不亞於。",tag:"注音",tag2:"促織",zone:"9/21",hint:"雖連城拱璧不啻也"});
+QUIZ.push({q:"「齕」（直齕敵領）的正確注音？",opts:["ㄏㄜˊ","ㄏㄟˊ","ㄍㄜˊ","ㄏㄨㄛˊ"],ans:0,exp:"齕＝ㄏㄜˊ，咬。★★注39必考",tag:"注音",tag2:"促織",zone:"10/5",hint:"張尾伸須，直齕敵領"});
+QUIZ.push({q:"「惙」（氣息惙然）的正確注音？",opts:["ㄔㄨㄛˋ","ㄓㄨㄛˋ","ㄉㄨㄛˋ","ㄔㄨㄛˊ"],ans:0,exp:"惙＝ㄔㄨㄛˋ，氣若游絲、微弱。★注音＋詞義會考",tag:"注音",tag2:"促織",zone:"10/5",hint:"近撫之，氣息惙然"});
+QUIZ.push({q:"「覘」（覘視）的正確注音？",opts:["ㄔㄢ","ㄓㄢ","ㄔㄢˇ","ㄒㄧㄢ"],ans:0,exp:"覘＝ㄔㄢ，窺視、偷看。",tag:"注音",tag2:"促織",zone:"10/5",hint:"驚起覘視"});
+QUIZ.push({q:"「賚」（厚賚成）的正確注音？",opts:["ㄌㄞˋ","ㄌㄞˇ","ㄌㄞˊ","ㄙㄨㄥˋ"],ans:0,exp:"賚＝ㄌㄞˋ，賞賜。✗老師沒勾不考，但要會認。",tag:"注音",tag2:"促織",zone:"10/5",hint:"撫軍亦厚賚成"});
+QUIZ.push({q:"「跬」（跬步）的正確注音？",opts:["ㄎㄨㄟˇ","ㄍㄨㄟˇ","ㄎㄨㄟˋ","ㄐㄩˇ"],ans:0,exp:"跬＝ㄎㄨㄟˇ，半步。★考讀音＋詞義",tag:"注音",tag2:"促織",zone:"10/5",hint:"天子一跬步"});
+QUIZ.push({q:"「翕」（唇吻翕辟）的正確注音？",opts:["ㄒㄧˋ","ㄏㄜˊ","ㄨㄥˋ","ㄩˋ"],ans:0,exp:"翕＝ㄒㄧˋ，合。翕辟＝一合一張。",tag:"注音",tag2:"促織",zone:"9/21",hint:"唇吻翕辟"});
+QUIZ.push({q:"「辟」（唇吻翕辟）的正確注音？",opts:["ㄅㄧˋ","ㄆㄧˋ","ㄅㄧˇ","ㄆㄧˇ"],ans:0,exp:"辟＝ㄅㄧˋ，開。翕辟＝一開一合。",tag:"注音",tag2:"促織",zone:"9/21",hint:"唇吻翕辟"});
+QUIZ.push({q:"「涕」（兒涕而去）的正確注音？",opts:["ㄊㄧˋ","ㄊㄧˇ","ㄉㄧˋ","ㄊㄧˊ"],ans:0,exp:"涕＝ㄊㄧˋ，流眼淚（古文不是鼻涕）。★",tag:"注音",tag2:"促織",zone:"10/5",hint:"兒涕而去"});
+QUIZ.push({q:"「裨」（死何裨益）的正確注音？",opts:["ㄅㄧˋ","ㄅㄟ","ㄆㄧˊ","ㄅㄧˇ"],ans:0,exp:"裨＝ㄅㄧˋ，幫助、益處。",tag:"注音",tag2:"促織",zone:"9/21",hint:"死何裨益"});
+QUIZ.push({q:"「詣」（具資詣問）的正確注音？",opts:["ㄧˋ","ㄓˇ","ㄧˇ","ㄓㄠˇ"],ans:0,exp:"詣＝ㄧˋ，前往（帶敬意）。",tag:"注音",tag2:"促織",zone:"9/21",hint:"成妻具資詣問"});
+QUIZ.push({q:"「竦」（竦立以聽）的正確注音？",opts:["ㄙㄨㄥˇ","ㄙㄨㄥˋ","ㄕㄨㄥˇ","ㄘㄨㄥˊ"],ans:0,exp:"竦＝ㄙㄨㄥˇ，恭敬（肅敬）。竦立＝恭敬肅立。",tag:"注音",tag2:"促織",zone:"9/21",hint:"各各竦立以聽"});
+QUIZ.push({q:"「促織」的正確注音？",opts:["ㄘㄨˋ ㄓˊ","ㄘㄨˋ ㄓ","ㄘㄨˋ ㄓˇ","ㄗㄨˊ ㄓˊ"],ans:0,exp:"促織＝ㄘㄨˋ ㄓˊ（蟋蟀別名）。",tag:"注音",tag2:"促織",zone:"9/21"});
+QUIZ.push({q:"「蟋蟀」的正確注音？",opts:["ㄒㄧ ㄕㄨㄞˋ","ㄒㄧˊ ㄕㄨㄞˋ","ㄒㄧ ㄕㄨㄞˇ","ㄒㄧ ㄕㄨㄟˋ"],ans:0,exp:"蟋蟀＝ㄒㄧ ㄕㄨㄞˋ。",tag:"注音",tag2:"促織",zone:"9/21"});
+QUIZ.push({q:"「匱」（不復聊賴的「賴」常誤寫）——「聊賴」的「賴」注音？",opts:["ㄌㄞˋ","ㄌㄞˇ","ㄌㄞˊ","ㄋㄞˋ"],ans:0,exp:"賴＝ㄌㄞˋ，依靠。不復聊賴＝生活不再有依靠。",tag:"注音",tag2:"促織",zone:"10/5",hint:"不復聊賴"});
+QUIZ.push({q:"「藁」（藁葬）的正確注音？",opts:["ㄍㄠˇ","ㄍㄠˋ","ㄎㄠˇ","ㄏㄠˊ"],ans:0,exp:"藁＝ㄍㄠˇ（草）。藁葬＝草席裹屍埋葬。★注音＋詞義會考",tag:"注音",tag2:"促織",zone:"10/5",hint:"取兒藁葬"});
+QUIZ.push({q:"「啄」——〈登高〉「鳥飛迴」的「迴」注音？",opts:["ㄏㄨㄟˊ","ㄏㄨㄟˇ","ㄏㄨㄟˋ","ㄏㄨㄞˊ"],ans:0,exp:"迴＝ㄏㄨㄟˊ，迴旋。鳥飛迴＝鳥盤旋飛翔。",tag:"注音",tag2:"登高",zone:"外部",hint:"渚清沙白鳥飛迴"});
+QUIZ.push({q:"「崔嵬」——「登臺」的「臺」與「臺」——「獨登臺」的「臺」注音？",opts:["ㄊㄞˊ","ㄊㄞˇ","ㄊㄞˋ","ㄉㄞˊ"],ans:0,exp:"臺＝ㄊㄞˊ（高台，臺／台通用）。獨登臺＝獨自登高。",tag:"注音",tag2:"登高",zone:"外部",hint:"百年多病獨登臺"});
+/* ---- 注音反嚮導（音→字） ---- */
+QUIZ.push({q:"注音「ㄓㄨˇ」是下面哪個字？",opts:["渚","煮","主","阻"],ans:0,exp:"渚＝ㄓㄨˇ（水中小洲）。其他：煮ㄓㄨˇ同音但不同字；「渚」是〈登高〉關鍵字。",tag:"注音",tag2:"登高",zone:"外部"});
+QUIZ.push({q:"注音「ㄏㄜˊ」是下面哪個字？",opts:["齕","和","河","盒"],ans:0,exp:"齕＝ㄏㄜˊ，咬（直齕敵領）。同音字：和、河、盒。",tag:"注音",tag2:"促織",zone:"10/5"});
+QUIZ.push({q:"注音「ㄔㄨㄛˋ」是下面哪個字？",opts:["惙","綽","戳","輟"],ans:0,exp:"惙＝ㄔㄨㄛˋ，氣若游絲。同音字：綽、輟。",tag:"注音",tag2:"促織",zone:"10/5"});
+QUIZ.push({q:"注音「ㄎㄨㄟˇ」是下面哪個字？",opts:["跬","潰","餽","魁"],ans:0,exp:"跬＝ㄎㄨㄟˇ，半步。同音字：傀（ㄍㄨㄟˇ 不在此列）、潰ㄎㄨㄟˋ。",tag:"注音",tag2:"促織",zone:"10/5"});
+QUIZ.push({q:"注音「ㄌㄞˋ」是下面哪個字？",opts:["賚","賴","癩","籟"],ans:0,exp:"賚＝ㄌㄞˋ，賞賜（厚賚成）。同音：賴、癩、籟。",tag:"注音",tag2:"促織",zone:"10/5"});
+/* ---- 翻字卡（註釋快速複習） ---- */
+CARDS.push({front:"遊俠兒",ctx:"市中遊俠兒得佳者籠養之",back:"遊手好閒的混混、奸商（不是俠客）；昂其直＝抬高價錢；居為奇貨＝囤積居奇。",mark:"★★必考",tag:"前半"});
+CARDS.push({front:"里胥",ctx:"里胥猾黠，假此科斂丁口",back:"官署小吏、貪官（注十）；假＝藉；科斂＝按名目攤派斂財。",mark:"★注十必考",tag:"前半"});
+CARDS.push({front:"丁／口",ctx:"科斂丁口",back:"丁＝成年男子；口＝未成年者與女性。合稱人口。",mark:"★",tag:"前半"});
+CARDS.push({front:"操童子業，久不售",ctx:"邑有成名者",back:"童子＝準備童子試的考生（注八）；售＝考中、被錄取（注九）。",mark:"★★注八、九一定考",tag:"前半"});
+CARDS.push({front:"不中於款",ctx:"即捕得三兩頭，又劣弱不中於款",back:"中＝符合；款＝規格、標準。",mark:"★★老師說一定考",tag:"前半"});
+CARDS.push({front:"宰嚴限追比",ctx:"宰嚴限追比，旬余，杖至百",back:"宰＝縣令；追比＝限期逼責＋杖責。",mark:"★宰＝縣令",tag:"前半"});
+CARDS.push({front:"裨益／冀",ctx:"死何裨益？不如自行搜覓，冀有萬一之得",back:"裨＝幫助、益處；冀＝希望。",mark:"裨＝助",tag:"前半"});
+CARDS.push({front:"靡／迄／濟",ctx:"靡計不施，迄無濟",back:"靡＝無；迄＝最終；濟＝成功、幫助。",mark:"堵＝牆、靡＝無",tag:"前半"});
+CARDS.push({front:"唇吻翕辟",ctx:"巫從旁望空代祝，唇吻翕辟",back:"翕＝合；辟＝開。一開一合。",mark:"★★翕辟",tag:"前半"});
+CARDS.push({front:"無毫髮爽",ctx:"即道人意中事，無毫髮爽",back:"爽＝差錯。毫無差錯＝神準。",mark:"★★「爽＝差錯」",tag:"前半"});
+CARDS.push({front:"審視／修尾",ctx:"審視，巨身修尾，青項金翅",back:"審＝仔細；修＝長。",mark:"★",tag:"前半"});
+CARDS.push({front:"爇香于鼎",ctx:"問者爇香于鼎，再拜",back:"爇（ㄖㄨㄛˋ）＝焚、點；鼎＝香爐。",mark:"鼎＝香爐",tag:"前半"});
+CARDS.push({front:"掭以尖草",ctx:"掭以尖草，不出；以筒水灌之",back:"掭（ㄊㄧㄢˋ）＝用細長物輕撥。",mark:"掭＝輕撥",tag:"前半"});
+CARDS.push({front:"躡跡披求",ctx:"躡跡披求，見有蟲伏棘根",back:"躡跡＝循蹤輕追；披＝撥開（撥草）。",mark:"披＝撥開",tag:"前半"});
+CARDS.push({front:"詣問",ctx:"成妻具資詣問",back:"詣＝前往（帶敬意）；具＝備辦。",mark:"詣＝前往",tag:"前半"});
+CARDS.push({front:"門／戶",ctx:"紅女白婆，填塞門戶",back:"門＝雙扇門；戶＝單扇門。",mark:"門／戶之別",tag:"前半"});
+CARDS.push({front:"不啻",ctx:"雖連城拱璧不啻也",back:"啻（ㄔˋ）＝止、僅；不啻＝不亞於。",mark:"★（約注24）",tag:"前半"});
+CARDS.push({front:"竊發盆",ctx:"窺父不在，竊發盆",back:"竊＝偷偷；發＝打開。",mark:"★",tag:"後半"});
+CARDS.push({front:"斯須",ctx:"股落腹裂，斯須就斃",back:"斯須＝片刻、一會兒（時間副詞，注26）。",mark:"★注26",tag:"後半"});
+CARDS.push({front:"覆算",ctx:"而翁歸，自與汝覆算耳",back:"覆算＝算帳、追究（約注28）；而＝你；翁＝爸爸。",mark:"★★必考，A/B卷互換",tag:"後半"});
+CARDS.push({front:"涕",ctx:"兒涕而去",back:"涕＝流眼淚（古文不是鼻涕）。",mark:"★",tag:"後半"});
+CARDS.push({front:"如被冰雪",ctx:"未幾，成歸……如被冰雪",back:"被＝覆蓋。",mark:"★",tag:"後半"});
+CARDS.push({front:"不復聊賴",ctx:"夫妻向隅，茅舍無煙……不復聊賴",back:"向隅＝對著牆角；聊賴＝依靠；不復聊賴＝生活不再有依靠（約注32）。",mark:"★★必考",tag:"後半"});
+CARDS.push({front:"藁葬／惙然",ctx:"取兒藁葬；近撫之，氣息惙然",back:"藁葬（ㄍㄠˇ）＝草席裹屍埋葬；惙（ㄔㄨㄛˋ）然＝氣若游絲。",mark:"★注音＋詞義會考",tag:"後半"});
+CARDS.push({front:"目不交睫",ctx:"自昏達曙，目不交睫",back:"整夜沒闔眼（睫毛沒相合）。",mark:"★★考古題",tag:"後半"});
+CARDS.push({front:"東曦既駕",ctx:"東曦既駕，僵臥長愁",back:"曦＝日光；太陽已從東方升起。羲和＝太陽神、駕六龍車（注35）。",mark:"★★",tag:"後半"});
+CARDS.push({front:"覘視",ctx:"忽聞門外蟲鳴，驚起覘視",back:"覘（ㄔㄢ）＝窺視、偷看。",mark:"覘＝窺視",tag:"後半"});
+CARDS.push({front:"審諦",ctx:"審諦之，短小，黑赤色",back:"審諦＝仔細看。",mark:"★",tag:"後半"});
+CARDS.push({front:"蠢若木雞",ctx:"小蟲伏不動，蠢若木雞",back:"呆若木雞，成語出自《莊子》。",mark:"★★出處必記",tag:"後半"});
+CARDS.push({front:"掩口葫蘆而笑",ctx:"視成所蓄，掩口葫蘆而笑",back:"葫蘆＝掩口而笑、咯咯笑（注38）。",mark:"★★注38會考",tag:"後半"});
+CARDS.push({front:"直齕敵領",ctx:"張尾伸須，直齕敵領",back:"齕（ㄏㄜˊ）＝咬。一口咬住對方脖子（注39）。",mark:"★★★注39必考",tag:"後半"});
+CARDS.push({front:"翹然矜鳴",ctx:"蟲翹然矜鳴，似報主知",back:"翹然＝抬頭得意貌；矜鳴＝得意鳴叫（擬人化；注40打勾）。",mark:"★★",tag:"後半"});
+CARDS.push({front:"諸（之於）",ctx:"獻諸撫軍",back:"諸＝之於（合音）。撫軍＝巡撫。✗撫軍未勾不考。",mark:"★諸＝之於",tag:"後半"});
+CARDS.push({front:"細疏其能",ctx:"以金籠進上，細疏其能",back:"疏＝上奏章敘述（動詞，不是「細數」）。",mark:"★動詞用法",tag:"後半"});
+CARDS.push({front:"無出其右",ctx:"遍試之，無出其右者",back:"右為尊、左為卑＝第一名。",mark:"★",tag:"後半"});
+CARDS.push({front:"學使／俾",ctx:"囑學使，俾入邑庠",back:"學使＝掌理各省科舉學政、文風之官（注45）；俾＝使。",mark:"★★學使一定考",tag:"後半"});
+CARDS.push({front:"跬步",ctx:"天子一跬步，皆關民命",back:"跬（ㄎㄨㄟˇ）步＝半步（只踏出一隻腳，注47）。",mark:"★考讀音＋詞義",tag:"後半"});
+CARDS.push({front:"貼婦賣兒（互文）",ctx:"民日貼婦賣兒，更無休止",back:"貼＝典當；互文：民、婦合看＝百姓每天典當東西、甚至賣小孩。",mark:"★★貼＋互文",tag:"後半"});
+CARDS.push({front:"異史氏曰",ctx:"異史氏曰",back:"異史氏＝蒲松齡自稱；模仿《史記》「太史公曰」；此寫法最早出自《左傳》。",mark:"★★★確定出一題",tag:"後半"});
+CARDS.push({front:"渚",ctx:"渚清沙白鳥飛迴",back:"渚（ㄓㄨˇ）＝水中小洲。",mark:"登高",tag:"登高"});
+CARDS.push({front:"百年",ctx:"百年多病獨登臺",back:"百年＝晚年（借指一生之末，不是一百年）。",mark:"易誤解",tag:"登高"});
+CARDS.push({front:"苦恨／繁",ctx:"艱難苦恨繁霜鬢",back:"苦恨＝極恨（苦＝極）；繁＝增多（動詞）。",mark:"易誤解",tag:"登高"});
+CARDS.push({front:"新停濁酒杯",ctx:"潦倒新停濁酒杯",back:"晚年因肺病戒酒；濁酒＝未濾之酒。連借酒澆愁也不可得。",mark:"尾聯點題",tag:"登高"});
+CARDS.push({front:"落木蕭蕭",ctx:"無邊落木蕭蕭下",back:"落木＝秋天飄落的樹葉（以「木」代「葉」更顯蕭瑟）。",mark:"千古名句",tag:"登高"});
+CARDS.push({front:"古今七律第一",ctx:"胡應麟《詩藪》",back:"「此詩自當為古今七律第一」；楊倫《杜詩鏡銓》稱「杜集七言律詩第一」。",mark:"地位必記",tag:"登高"});
+CARDS.push({front:"十四字八意",ctx:"宋・羅大經《鶴林玉露》",back:"頸聯十四字含八意、對偶極精確。",mark:"名家點評",tag:"登高"});
+/* @@BANK_2_END@@ */
+
+/* ---- 必考標記：老師明說「會考／一定考」的題目（★＝老師點名必考） ---- */
+(function markMust(){
+  var pat = /必考|一定考|會考|考古題|A\/B卷|確定出一題|★★/;
+  QUIZ.forEach(function(q){ q.star = pat.test(q.exp); });
+  // 老師點名過、但題面未含上述關鍵字的題目（對應 06 註釋表 ★ 層級）
+  var extra = ["遊俠兒","里胥","科斂丁口","操童子業","不中於款","宰嚴限追比","唇吻翕辟","無毫髮爽","審視，巨身修尾","不啻","爇香于鼎","掭以尖草","躡跡披求","詣問","竦立以聽","冀有萬一","薄產累盡","成然之","紅女白婆","遽撲之","兩股間","填塞門戶","竊發盆","斯須就斃","覆算","兒涕而去","如被冰雪","夫妻向隅","不復聊賴","藁葬","氣息惙然","目不交睫","東曦既駕","驚起覘視","審諦之","蠢若木雞","掩口葫蘆而笑","直齕敵領","翹然矜鳴","獻諸撫軍","細疏其能","無出其右","應節而舞","囑學使","天子一跬步","貼婦賣兒","裘馬過世家","異史氏","一人飛升","蹄躈","厚賚","人物形象","無鋪陳突入","伏筆","一雞瞥來","渚","鬢","潦","濁","促織","蟋蟀","聊賴","藁葬","鳥飛迴","獨登臺","齕","惙","跬","賚","翕","辟","涕","裨","詣","竦","迴"];
+  extra.forEach(function(kw){ QUIZ.forEach(function(q){ if(q.q.indexOf(kw)>=0) q.star = true; }); });
+  // 登高為外部整理、老師未逐項點名：不加必考標記（但整篇是考試範圍）
+})();
+
+/* ================= 狀態 ================= */
+var mode='all', list=[], idx=0, correct=0, answered=false, total=0;
+var cardIdx=0, cardMode='all', cardKnown=0, cardUnknown=0;
+var LS='mcu_guowen_quiz_v1';
+
+function loadLS(){
+  try{return JSON.parse(localStorage.getItem(LS)||'{}');}catch(e){return {};}
+}
+function saveLS(o){localStorage.setItem(LS, JSON.stringify(o));}
+function bestScore(k){
+  var s=loadLS(); return (s.best&&s.best[k])?s.best[k]:null;
+}
+
+/* ================= 路由 ================= */
+function go(v){
+  document.querySelectorAll('#view-home,#view-quiz,#view-result,#view-cards,#view-overview').forEach(function(s){s.classList.add('hidden');});
+  document.getElementById('view-'+v).classList.remove('hidden');
+  window.scrollTo(0,0);
+  if(v==='quiz'){startQuiz('quiz');}
+  else if(v==='bpmf'){startQuiz('bpmf');}
+  else if(v==='cards'){startCards();}
+  else if(v==='overview'){renderOverview();}
+  else{renderHome();}
+}
+function renderHome(){
+  var s=loadLS().best||{};
+  var qb = s.quiz?('最佳 '+s.quiz+'/'+s.quizT):'';
+  var mb = s.must?('　必考 '+s.must+'/'+s.mustT):'';
+  document.getElementById('best-quiz').textContent = qb+mb;
+  document.getElementById('best-bpmf').textContent = s.bpmf?('最佳 '+s.bpmf+'/'+s.bpmfT):'';
+  document.getElementById('best-cards').textContent = s.cards?('已會 '+s.cards+' 張'):'';
+  document.getElementById('best-overview').textContent='';
+}
+function setFilter(f, el){
+  mode=f;
+  document.querySelectorAll('#view-home .chip').forEach(function(c){c.classList.remove('on');});
+  el.classList.add('on');
+}
+
+/* ================= 測驗 ================= */
+function poolFor(mode){
+  if(mode==='bpmf') return QUIZ.filter(function(q){return q.tag==='注音';});
+  if(mode==='必考') return QUIZ.filter(function(q){return q.star && q.tag!=='注音';});
+  return QUIZ.filter(function(q){return mode==='all'||q.tag===mode;});
+}
+function shuffle(a){
+  var arr=a.slice();
+  for(var i=arr.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=arr[i];arr[i]=arr[j];arr[j]=t;}
+  return arr;
+}
+function startQuiz(which){
+  var isBpmf = which==='bpmf';
+  var base;
+  if(isBpmf){
+    base = (mode==='必考') ? QUIZ.filter(function(q){return q.tag==='注音' && q.star;}) : QUIZ.filter(function(q){return q.tag==='注音';});
+  }else{
+    base = poolFor(mode);
+  }
+  if(!base.length){alert('此範圍沒有題目');go('home');return;}
+  list = shuffle(base); idx=0; correct=0; total=list.length; answered=false;
+  document.getElementById('quiz-title').textContent = isBpmf?'注音挑戰（台灣注音符號）':'選擇題闖關';
+  renderQ();
+}
+function renderQ(){
+  var q=list[idx];
+  document.getElementById('pfill').style.width=((idx)/total*100)+'%';
+  document.getElementById('pnum').textContent=(idx+1)+' / '+total;
+  document.getElementById('qtag').textContent = q.tag==='注音'?'注音・'+q.tag2:(q.tag+'・'+q.zone);
+  document.getElementById('qtext').innerHTML = q.html || escapeHtml(q.q);
+  var hint = q.hint?('<span class="serif">'+escapeHtml(q.hint)+'</span>'):'';
+  document.getElementById('qhint').innerHTML = hint;
+  document.getElementById('explain').className='explain';
+  document.getElementById('explain').innerHTML='';
+  document.getElementById('nextbtn').disabled=true;
+  answered=false;
+  var box=document.getElementById('opts'); box.innerHTML='';
+  q.opts.forEach(function(o,i){
+    var b=document.createElement('button');
+    b.className='opt';
+    b.innerHTML='<span class="k">'+String.fromCharCode(65+i)+'</span><span>'+escapeHtml(o)+'</span>';
+    b.onclick=function(){pick(i,b);};
+    box.appendChild(b);
+  });
+}
+function pick(i, el){
+  if(answered) return;
+  answered=true;
+  var q=list[idx];
+  var opts=document.querySelectorAll('#opts .opt');
+  opts.forEach(function(o){o.classList.add('dim');});
+  var ok = i===q.ans;
+  if(ok){
+    correct++;
+    el.classList.add('correct');
+  }else{
+    el.classList.add('wrong');
+    opts[q.ans].classList.add('correct');
+  }
+  var ex=document.getElementById('explain');
+  ex.innerHTML='<b>'+(ok?'✓ 答對了　':'✗ 答錯了　')+'</b>'+escapeHtml(q.exp);
+  ex.classList.add('show');
+  document.getElementById('nextbtn').disabled=false;
+}
+function nextQ(){
+  idx++;
+  if(idx>=total){finish();return;}
+  renderQ();
+}
+function finish(){
+  var key = mode==='注音' ? 'bpmf' : (mode==='必考' ? 'must' : 'quiz');
+  var s=loadLS();
+  s.best=s.best||{};
+  s.best[key]=Math.max(s.best[key]||0,correct);
+  s.best[key+'T']=total;
+  saveLS(s);
+  var scopeName = mode==='注音'?'注音':(mode==='必考'?'★老師必考':(mode==='all'?'全部':mode));
+  document.getElementById('result-title').textContent = (mode==='注音'?'注音挑戰結果':(mode==='必考'?'必考衝刺結果':'測驗結果'));
+  document.getElementById('score-num').textContent=correct;
+  document.getElementById('score-total').textContent=total;
+  var pct=Math.round(correct/total*100);
+  var v = pct>=90?'考前衝刺已到位，穩了。':pct>=75?'掌握不錯，把錯的詳解再掃一遍。':pct>=60?'基礎有，但必考字詞還要再背。':pct>=40?'有點危險，先背★必考表再回來。':'時間還夠，從翻字卡開始慢慢補。';
+  document.getElementById('verdict').textContent=v+'（範圍：'+scopeName+'，共 '+total+' 題）';
+  renderStars();
+  var h=loadLS().hist||[];
+  var recent=h.slice(-6).reverse().map(function(r){return '　'+r.t+'　'+r.s+'/'+r.n+'　('+r.p+'%)';}).join('\n');
+  document.getElementById('hist').textContent = recent?('近幾次成績：\n'+recent):'近幾次成績：尚無紀錄';
+  go('result');
+}
+function renderStars(){
+  var box=document.getElementById('stars'); box.innerHTML='';
+  for(var i=1;i<=5;i++){
+    var b=document.createElement('button');
+    b.className='star'; b.textContent='★'; b.dataset.v=i;
+    b.onclick=function(){selfRate(parseInt(this.dataset.v,10));};
+    box.appendChild(b);
+  }
+}
+function selfRate(v){
+  var s=loadLS(); s.hist=s.hist||[];
+  s.hist.push({t:new Date().toLocaleDateString('zh-TW'), s:correct, n:total, p:Math.round(correct/total*100), r:v});
+  saveLS(s);
+  var stars=document.querySelectorAll('#stars .star');
+  stars.forEach(function(st){st.classList.toggle('on',parseInt(st.dataset.v,10)<=v);});
+}
+function restart(){
+  var isBpmf = document.getElementById('result-title').textContent.indexOf('注音')>=0;
+  if(isBpmf){startQuiz('bpmf');} else {startQuiz('quiz');}
+  go('quiz');
+}
+function escapeHtml(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+/* ================= 翻字卡 ================= */
+function cardFilter(f, el){
+  cardMode=f;
+  document.querySelectorAll('#view-cards .chip').forEach(function(c){c.classList.remove('on');});
+  el.classList.add('on');
+  startCards();
+}
+function startCards(){
+  cardKnown=0; cardUnknown=0;
+  var base = cardMode==='all'?CARDS:CARDS.filter(function(c){return c.tag===cardMode;});
+  if(!base.length){alert('此範圍沒有卡片');go('home');return;}
+  CARDS_POOL=shuffle(base); cardIdx=0;
+  renderCard();
+}
+function renderCard(){
+  var c=CARDS_POOL[cardIdx];
+  document.getElementById('cf-tag').textContent=c.tag;
+  document.getElementById('cf-word').textContent=c.front;
+  document.getElementById('cf-ctx').textContent=c.ctx||'';
+  document.getElementById('cf-def').innerHTML=escapeHtml(c.back);
+  document.getElementById('cf-mark').textContent=c.mark||'';
+  document.getElementById('flip').classList.remove('flipped');
+  document.getElementById('cf-stat').textContent='第 '+(cardIdx+1)+' 張 / 共 '+CARDS_POOL.length+' 張｜會 '+cardKnown+'　還不會 '+cardUnknown;
+}
+function flipCard(){document.getElementById('flip').classList.toggle('flipped');}
+function cardMark(known){
+  if(known){cardKnown++;}else{cardUnknown++;}
+  cardIdx++;
+  if(cardIdx>=CARDS_POOL.length){
+    var s=loadLS(); s.best=s.best||{};
+    s.best.cards=Math.max(s.best.cards||0,cardKnown);
+    saveLS(s);
+    document.getElementById('flip').classList.remove('flipped');
+    document.getElementById('cf-word').textContent='複習完成';
+    document.getElementById('cf-ctx').textContent='';
+    document.getElementById('cf-def').innerHTML='這一輪結束：會 '+cardKnown+' 張、還不會 '+cardUnknown+' 張。點「還不會」的再去翻字卡或詳解總覽補。';
+    document.getElementById('cf-mark').textContent='';
+    document.getElementById('cf-stat').textContent='';
+    return;
+  }
+  renderCard();
+}
+
+/* ================= 詳解總覽 ================= */
+function ovFilter(f, el){
+  document.querySelectorAll('#view-overview .chip').forEach(function(c){c.classList.remove('on');});
+  el.classList.add('on');
+  renderOverview(f);
+}
+function renderOverview(f){
+  var flt = f||'all';
+  var items = QUIZ.filter(function(q){
+    if(flt==='all') return true;
+    if(flt==='必考') return q.star && q.tag!=='注音';
+    return q.tag===flt;
+  });
+  var box=document.getElementById('ovlist'); box.innerHTML='';
+  items.forEach(function(q,i){
+    var d=document.createElement('details');
+    d.className='ovitem';
+    var sum=document.createElement('summary');
+    sum.innerHTML='<span class="qk">'+(i+1)+'</span><span>'+escapeHtml(q.q).slice(0,42)+(q.q.length>42?'…':'')+'</span><span class="atag">'+(q.star?'★':'')+escapeHtml(q.tag)+'</span>';
+    var body=document.createElement('div'); body.className='ovbody';
+    var opts='';
+    q.opts.forEach(function(o,j){
+      opts+='<div class="oa">'+String.fromCharCode(65+j)+'. '+escapeHtml(o)+(j===q.ans?'　<b class="ok">✓ 答案</b>':'')+'</div>';
+    });
+    body.innerHTML=opts+'<div class="oe">'+escapeHtml(q.exp)+'</div>';
+    d.appendChild(sum); d.appendChild(body);
+    box.appendChild(d);
+  });
+  if(!items.length) box.innerHTML='<div class="card" style="text-align:center;color:var(--ink3);">此範圍沒有題目</div>';
+}
+
+/* ================= 初始化 ================= */
+var CARDS_POOL=[];
+renderHome();
+</script>
+</body>
+</html>
